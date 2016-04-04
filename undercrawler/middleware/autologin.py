@@ -31,8 +31,10 @@ class AutologinMiddleware:
     - do not block event loop in login() method (instead, collect
     scheduled requests in a separate queue and make request with scrapy).
     '''
-    def __init__(self, autologin_url, auth_cookies=None, logout_url=None):
+    def __init__(self, autologin_url, auth_cookies=None, logout_url=None,
+                 splash_url=None):
         self.autologin_url = autologin_url
+        self.splash_url = splash_url
         if auth_cookies:
             cookies = SimpleCookie()
             cookies.load(auth_cookies)
@@ -53,6 +55,7 @@ class AutologinMiddleware:
             autologin_url=crawler.settings.get('AUTOLOGIN_URL'),
             auth_cookies=crawler.settings.get('AUTH_COOKIES'),
             logout_url=crawler.settings.get('LOGOUT_URL'),
+            splash_url=crawler.settings.get('SPLASH_URL'),
             )
 
     def process_request(self, request, spider):
@@ -85,7 +88,10 @@ class AutologinMiddleware:
         while True:
             request = requests.post(
                 urljoin(self.autologin_url, '/login-cookies'),
-                data=json.dumps({'url': url}),
+                data=json.dumps({
+                    'url': url,
+                    'splash_url': self.splash_url,
+                }),
                 headers={'content-type': 'application/json'})
             response = request.json()
             status = response['status']
