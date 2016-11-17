@@ -3,7 +3,7 @@ BOT_NAME = 'undercrawler'
 SPIDER_MODULES = ['undercrawler.spiders']
 NEWSPIDER_MODULE = 'undercrawler.spiders'
 
-ROBOTSTXT_OBEY = False
+ROBOTSTXT_OBEY = True
 DEPTH_LIMIT = 20
 
 SPLASH_URL = 'http://127.0.0.1:8050'
@@ -24,8 +24,15 @@ HARD_URL_CONSTRAINT = False
 AVOID_DUP_CONTENT_ENABLED = True
 
 FILES_STORE_S3_ACL = 'public-read'
+AWS_ACCESS_KEY_ID = 'AKIAI4M2RGNZPW7VMKHQ'
+AWS_SECRET_ACCESS_KEY ='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'
+S3_BUCKET = 'omm-onpage'
+
 # Set FILES_STORE to enable
-ITEM_PIPELINES = {'undercrawler.documents_pipeline.CDRDocumentsPipeline': 1}
+ITEM_PIPELINES = {
+    'undercrawler.documents_pipeline.CDRDocumentsPipeline': 1,
+    'undercrawler.botos3.S3Pipeline': 1
+}
 
 DOWNLOADER_MIDDLEWARES = {
     'maybedont.scrapy_middleware.AvoidDupContentMiddleware': 200,
