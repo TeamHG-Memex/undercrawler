@@ -1,5 +1,6 @@
 scrapy==1.1.0
 botocore
+boto3
 scrapy-splash==0.6
 git+https://github.com/TeamHG-Memex/autologin-middleware.git
 git+https://github.com/TeamHG-Memex/MaybeDont.git
