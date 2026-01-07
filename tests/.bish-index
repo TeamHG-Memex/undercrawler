@@ -1,0 +1,7 @@
+./test_dupe_filter.py
+./test_autologin.py
+./utils.py
+./conftest.py
+./__init__.py
+./test_spider.py
+./mockserver.py
